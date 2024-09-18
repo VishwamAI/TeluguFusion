@@ -1,0 +1,53 @@
+{
+  "name": "telugufusion-vscode",
+  "ప్రదర్శనపేరు": "తెలుగుఫ్యూజన్ VSCode ప్లగిన్",
+  "వివరణ": "Visual Studio Code కోసం తెలుగుఫ్యూజన్ ప్రోగ్రామింగ్ భాషా మద్దతు",
+  "వెర్షన్": "0.0.1",
+  "ప్రచురణకర్త": "తెలుగుఫ్యూజన్ టీమ్",
+  "ఇంజన్లు": {
+    "vscode": "^1.60.0"
+  },
+  "వర్గీకరణలు": [
+    "ప్రోగ్రామింగ్ భాషలు"
+  ],
+  "సహకారాలు": {
+    "భాషలు": [{
+      "id": "telugufusion",
+      "పొడిగింపులు": [".tel", ".telugu"],
+      "ఆలియాస్‌లు": ["TeluguFusion", "తెలుగుఫ్యూజన్"]
+    }],
+    "వాక్యనిర్మాణాలు": [{
+      "భాష": "telugufusion",
+      "పథం": "./syntaxes/telugufusion.tmLanguage.json"
+    }],
+    "డీబగ్గర్లు": [{
+      "రకం": "telugufusion",
+      "id": "telugufusion-debug",
+      "పేరు": "తెలుగుఫ్యూజన్ డీబగ్గర్"
+    }]
+  },
+  "సక్రియత": [
+    "onLanguage:telugufusion",
+    "onDebug"
+  ],
+  "ప్రధాన": "./out/extension.js",
+  "స్క్రిప్ట్‌లు": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./out/test/runTest.js",
+    "build": "tsc -p ./"
+  },
+  "ఆధారితాలు": {},
+  "పీర్ఆధారితాలు": {
+    "vscode": "^1.60.0"
+  },
+  "అభివృద్ధి ఆధారితాలు": {
+    "@types/node": "^14.14.37",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "typescript": "^4.2.4"
+  }
+}
