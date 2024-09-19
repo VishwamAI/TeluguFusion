@@ -455,11 +455,11 @@ public:
         visitor.visitBinaryExpressionNode(*this);
     }
 
-    std::unique_ptr<ASTNode> clone() const {
+    std::unique_ptr<ASTNode> clone() const override {
         auto cloned = std::make_unique<BinaryExpressionNode>(
             m_operator,
-            m_left->clone(),
-            m_right->clone()
+            m_left ? m_left->clone() : nullptr,
+            m_right ? m_right->clone() : nullptr
         );
         cloned->setSourceLocation(m_line, m_column);
         return cloned;
