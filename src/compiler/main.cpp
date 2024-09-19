@@ -921,7 +921,7 @@ std::unique_ptr<ASTNode> buildAST(const std::vector<Token>& tokens) {
                 if (token.value == L"+" || token.value == L"-" || token.value == L"*" || token.value == L"/") {
                     auto& children = stack.back()->getChildren();
                     if (children.size() >= 2) {
-                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(children.back()), std::move(children[children.size() - 2]));
+                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(children[children.size() - 1]), std::move(children[children.size() - 2]));
                         children.pop_back();
                         children.pop_back();
                         stack.back()->addChild(std::move(binaryExpr));
