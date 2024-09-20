@@ -1106,17 +1106,20 @@ std::unique_ptr<IRGenerator> generateIR(const ASTNode* ast) {
                 irGenerator->addInstruction(std::make_unique<ReturnInstruction>(*node));
                 break;
             case TokenType::BinaryExpression:
-                irGenerator->addInstruction(std::make_unique<ArithmeticInstruction>(*node));
+                irGenerator->addInstruction(std::make_unique<ArithmeticInstruction>(*dynamic_cast<const BinaryExpressionNode*>(node)));
                 break;
-            case TokenType::MatrixExpression:
-                irGenerator->addInstruction(std::make_unique<MatrixInstruction>(*node, MatrixOperations()));
+            case TokenType::TeluguMathOperator:
+                if (auto matrixNode = dynamic_cast<const MatrixExpressionNode*>(node)) {
+                    irGenerator->addInstruction(std::make_unique<MatrixInstruction>(*matrixNode));
+                }
                 break;
-            case TokenType::AgentDeclaration:
-                irGenerator->addInstruction(std::make_unique<AgentInstruction>(*node, AgentBehavior()));
+            case TokenType::TeluguAgentKeyword:
+                if (auto agentNode = dynamic_cast<const AgentDeclarationNode*>(node)) {
+                    irGenerator->addInstruction(std::make_unique<AgentInstruction>(*agentNode));
+                }
                 break;
-            case TokenType::HttpRequest:
-            case TokenType::WebSocketOperation:
-                irGenerator->addInstruction(std::make_unique<WebInstruction>(*node, WebDevelopmentTools()));
+            case TokenType::TeluguWebKeyword:
+                irGenerator->addInstruction(std::make_unique<WebInstruction>(*node));
                 break;
             default:
                 // For unhandled node types, we'll skip IR generation for now
