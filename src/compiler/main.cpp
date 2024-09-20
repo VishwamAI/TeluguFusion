@@ -334,6 +334,16 @@ public:
     virtual ~IRGenerator() = default;
 };
 
+class ConcreteIRGenerator : public IRGenerator {
+public:
+    void addInstruction(std::unique_ptr<IRInstruction> instruction) override {
+        // Implementation of addInstruction
+        instructions.push_back(std::move(instruction));
+    }
+private:
+    std::vector<std::unique_ptr<IRInstruction>> instructions;
+};
+
 class AgentDeclarationNode : public ASTNode {
 public:
     AgentDeclarationNode(const std::wstring& name)
