@@ -1120,7 +1120,7 @@ bool performSemanticAnalysis(const ASTNode* ast, SymbolTable& symbolTable) {
 
 // Intermediate representation
 std::unique_ptr<IRGenerator> generateIR(const ASTNode* ast) {
-    auto irGenerator = std::make_unique<IRGenerator>();
+    auto irGenerator = std::make_unique<ConcreteIRGenerator>();
 
     std::function<void(const ASTNode*)> generateIRRecursive = [&](const ASTNode* node) {
         if (!node) return;
