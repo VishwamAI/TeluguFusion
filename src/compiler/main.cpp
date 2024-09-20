@@ -1599,12 +1599,7 @@ public:
     virtual ~IRGenerator() = default;
 };
 
-// Move IRGenerator class definition here
-class IRGenerator {
-public:
-    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
-    virtual ~IRGenerator() = default;
-};
+// Removed duplicate IRGenerator class definition
 
 // Specific instruction classes
 class ArithmeticInstruction : public IRInstruction {
