@@ -292,6 +292,42 @@ public:
     void exitScope();
 };
 
+// IRInstruction class definition
+class IRInstruction {
+public:
+    enum class Type {
+        Arithmetic,
+        ControlFlow,
+        FunctionCall,
+        Assignment,
+        Declaration,
+        Return,
+        AgentBehavior,
+        WebOperation,
+        MathOperation,
+        MatrixOperation,
+        VectorOperation,
+        StatisticalOperation,
+        AgentCommunication,
+        HttpRequest,
+        HttpResponse,
+        WebSocketOperation,
+        DomManipulation,
+        DatabaseQuery,
+        DatabaseConnection
+    };
+
+    IRInstruction(Type type) : type(type) {}
+    virtual ~IRInstruction() = default;
+
+    Type getType() const { return type; }
+
+    virtual std::wstring toString() const = 0;
+
+protected:
+    Type type;
+};
+
 class IRGenerator {
 public:
     virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
@@ -972,7 +1008,7 @@ std::unique_ptr<ASTNode> buildAST(const std::vector<Token>& tokens) {
         throw ParsingError(0, 0, L"Unbalanced AST construction");
     }
 
-    return std::move(stack.front());
+    return stack.front();
 }
 
 // Semantic analysis
