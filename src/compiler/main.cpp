@@ -39,7 +39,8 @@ enum class TokenType {
     Unknown, Identifier, Number, String, Keyword, Operator, Punctuation,
     TeluguKeyword, TeluguIdentifier, TeluguStringLiteral, TeluguMathOperator,
     TeluguWebKeyword, TeluguDatabaseKeyword, TeluguAgentKeyword,
-    TeluguControlFlowKeyword, TeluguFunctionKeyword,
+    TeluguControlFlowKeyword, TeluguFunctionKeyword, TeluguClassKeyword,
+    TeluguModuleKeyword, TeluguConcurrencyKeyword, TeluguExceptionKeyword,
     Comment, Whitespace, EndOfFile, ErrorToken,
     FunctionDeclaration, VariableDeclaration, IfStatement, WhileLoop,
     AgentDeclaration, BinaryExpression, ReturnStatement,
@@ -271,7 +272,6 @@ public:
 // Forward declarations for core components
 class ASTNode;
 class ASTVisitor;
-class IRGenerator;
 class CodeGenerator;
 class Lexer;
 class Parser;
@@ -290,6 +290,12 @@ public:
     bool lookupSymbol(const std::wstring& name) const;
     void enterScope();
     void exitScope();
+};
+
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
 };
 
 class AgentDeclarationNode : public ASTNode {
@@ -485,7 +491,7 @@ class BinaryExpressionNode;
 
 
     // Basic tokens
-    EndOfFile, ErrorToken,
+    EndOfFile = 0, ErrorToken,
 
     // Telugu-specific types
     TeluguKeyword, TeluguIdentifier, TeluguStringLiteral,
@@ -637,7 +643,6 @@ class BinaryExpressionNode;
 
     // Additional required tokens
     Block, Program
-};
 
 // Forward declarations
 class Token;
@@ -1587,6 +1592,20 @@ protected:
     Type type;
 };
 
+// IRGenerator class definition
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
+// Move IRGenerator class definition here
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
 // Specific instruction classes
 class ArithmeticInstruction : public IRInstruction {
 public:
@@ -1834,21 +1853,9 @@ enum class ASTNodeType {
     LocalizationTag, TranslationUnit
 };
 
-class IRGenerator {
-public:
-    void addInstruction(std::unique_ptr<IRInstruction> instruction);
-    // Add other necessary methods
-};
-
 class FunctionDeclarationInstruction : public IRInstruction {
 public:
     FunctionDeclarationInstruction(const ASTNode* node) : IRInstruction(node) {}
-    // Add necessary methods
-};
-
-class DeclarationInstruction : public IRInstruction {
-public:
-    DeclarationInstruction(const ASTNode* node) : IRInstruction(node) {}
     // Add necessary methods
 };
 
