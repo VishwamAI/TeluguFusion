@@ -1597,6 +1597,12 @@ protected:
     Type type;
 };
 
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
 // IRGenerator class definition
 class IRGenerator {
 public:
