@@ -926,9 +926,11 @@ std::unique_ptr<ASTNode> buildAST(const std::vector<Token>& tokens) {
                 if (token.value == L"+" || token.value == L"-" || token.value == L"*" || token.value == L"/") {
                     auto& children = stack.back()->getChildren();
                     if (children.size() >= 2) {
-                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(children.back()), std::move(children[children.size() - 2]));
+                        auto right = std::move(children.back());
                         children.pop_back();
+                        auto left = std::move(children.back());
                         children.pop_back();
+                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(left), std::move(right));
                         stack.back()->addChild(std::move(binaryExpr));
                     } else {
                         throw ParsingError(token.line, token.column, L"Invalid binary expression");
