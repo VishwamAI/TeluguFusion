@@ -39,7 +39,8 @@ enum class TokenType {
     Unknown, Identifier, Number, String, Keyword, Operator, Punctuation,
     TeluguKeyword, TeluguIdentifier, TeluguStringLiteral, TeluguMathOperator,
     TeluguWebKeyword, TeluguDatabaseKeyword, TeluguAgentKeyword,
-    TeluguControlFlowKeyword, TeluguFunctionKeyword,
+    TeluguControlFlowKeyword, TeluguFunctionKeyword, TeluguClassKeyword,
+    TeluguModuleKeyword, TeluguConcurrencyKeyword, TeluguExceptionKeyword,
     Comment, Whitespace, EndOfFile, ErrorToken,
     FunctionDeclaration, VariableDeclaration, IfStatement, WhileLoop,
     AgentDeclaration, BinaryExpression, ReturnStatement,
@@ -271,7 +272,6 @@ public:
 // Forward declarations for core components
 class ASTNode;
 class ASTVisitor;
-class IRGenerator;
 class CodeGenerator;
 class Lexer;
 class Parser;
@@ -290,6 +290,58 @@ public:
     bool lookupSymbol(const std::wstring& name) const;
     void enterScope();
     void exitScope();
+};
+
+// IRInstruction class definition
+class IRInstruction {
+public:
+    enum class Type {
+        Arithmetic,
+        ControlFlow,
+        FunctionCall,
+        Assignment,
+        Declaration,
+        Return,
+        AgentBehavior,
+        WebOperation,
+        MathOperation,
+        MatrixOperation,
+        VectorOperation,
+        StatisticalOperation,
+        AgentCommunication,
+        HttpRequest,
+        HttpResponse,
+        WebSocketOperation,
+        DomManipulation,
+        DatabaseQuery,
+        DatabaseConnection
+    };
+
+    IRInstruction(Type type) : type(type) {}
+    virtual ~IRInstruction() = default;
+
+    Type getType() const { return type; }
+
+    virtual std::wstring toString() const = 0;
+
+protected:
+    Type type;
+};
+
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
+class ConcreteIRGenerator : public IRGenerator {
+public:
+    void addInstruction(std::unique_ptr<IRInstruction> instruction) override {
+        // Implementation of addInstruction
+        instructions.push_back(std::move(instruction));
+    }
+private:
+    std::vector<std::unique_ptr<IRInstruction>> instructions;
 };
 
 class AgentDeclarationNode : public ASTNode {
@@ -485,7 +537,7 @@ class BinaryExpressionNode;
 
 
     // Basic tokens
-    EndOfFile, ErrorToken,
+    EndOfFile = 0, ErrorToken,
 
     // Telugu-specific types
     TeluguKeyword, TeluguIdentifier, TeluguStringLiteral,
@@ -637,7 +689,6 @@ class BinaryExpressionNode;
 
     // Additional required tokens
     Block, Program
-};
 
 // Forward declarations
 class Token;
@@ -921,9 +972,11 @@ std::unique_ptr<ASTNode> buildAST(const std::vector<Token>& tokens) {
                 if (token.value == L"+" || token.value == L"-" || token.value == L"*" || token.value == L"/") {
                     auto& children = stack.back()->getChildren();
                     if (children.size() >= 2) {
-                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(children.back()), std::move(children[children.size() - 2]));
+                        auto right = std::move(children.back());
                         children.pop_back();
+                        auto left = std::move(children.back());
                         children.pop_back();
+                        auto binaryExpr = std::make_unique<BinaryExpressionNode>(token.value, std::move(left), std::move(right));
                         stack.back()->addChild(std::move(binaryExpr));
                     } else {
                         throw ParsingError(token.line, token.column, L"Invalid binary expression");
@@ -965,7 +1018,7 @@ std::unique_ptr<ASTNode> buildAST(const std::vector<Token>& tokens) {
         throw ParsingError(0, 0, L"Unbalanced AST construction");
     }
 
-    return std::move(stack.front());
+    return stack.front();
 }
 
 // Semantic analysis
@@ -1067,7 +1120,7 @@ bool performSemanticAnalysis(const ASTNode* ast, SymbolTable& symbolTable) {
 
 // Intermediate representation
 std::unique_ptr<IRGenerator> generateIR(const ASTNode* ast) {
-    auto irGenerator = std::make_unique<IRGenerator>();
+    auto irGenerator = std::make_unique<ConcreteIRGenerator>();
 
     std::function<void(const ASTNode*)> generateIRRecursive = [&](const ASTNode* node) {
         if (!node) return;
@@ -1099,17 +1152,20 @@ std::unique_ptr<IRGenerator> generateIR(const ASTNode* ast) {
                 irGenerator->addInstruction(std::make_unique<ReturnInstruction>(*node));
                 break;
             case TokenType::BinaryExpression:
-                irGenerator->addInstruction(std::make_unique<ArithmeticInstruction>(*node));
+                irGenerator->addInstruction(std::make_unique<ArithmeticInstruction>(*dynamic_cast<const BinaryExpressionNode*>(node)));
                 break;
-            case TokenType::MatrixExpression:
-                irGenerator->addInstruction(std::make_unique<MatrixInstruction>(*node, MatrixOperations()));
+            case TokenType::TeluguMathOperator:
+                if (auto matrixNode = dynamic_cast<const MatrixExpressionNode*>(node)) {
+                    irGenerator->addInstruction(std::make_unique<MatrixInstruction>(*matrixNode));
+                }
                 break;
-            case TokenType::AgentDeclaration:
-                irGenerator->addInstruction(std::make_unique<AgentInstruction>(*node, AgentBehavior()));
+            case TokenType::TeluguAgentKeyword:
+                if (auto agentNode = dynamic_cast<const AgentDeclarationNode*>(node)) {
+                    irGenerator->addInstruction(std::make_unique<AgentInstruction>(*agentNode));
+                }
                 break;
-            case TokenType::HttpRequest:
-            case TokenType::WebSocketOperation:
-                irGenerator->addInstruction(std::make_unique<WebInstruction>(*node, WebDevelopmentTools()));
+            case TokenType::TeluguWebKeyword:
+                irGenerator->addInstruction(std::make_unique<WebInstruction>(*node));
                 break;
             default:
                 // For unhandled node types, we'll skip IR generation for now
@@ -1587,6 +1643,28 @@ protected:
     Type type;
 };
 
+// IRGenerator class definition
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
+// IRGenerator class definition
+class IRGenerator {
+public:
+    virtual void addInstruction(std::unique_ptr<IRInstruction> instruction) = 0;
+    virtual ~IRGenerator() = default;
+};
+
+// Removed duplicate IRGenerator class definition
+
 // Specific instruction classes
 class ArithmeticInstruction : public IRInstruction {
 public:
@@ -1834,21 +1912,9 @@ enum class ASTNodeType {
     LocalizationTag, TranslationUnit
 };
 
-class IRGenerator {
-public:
-    void addInstruction(std::unique_ptr<IRInstruction> instruction);
-    // Add other necessary methods
-};
-
 class FunctionDeclarationInstruction : public IRInstruction {
 public:
     FunctionDeclarationInstruction(const ASTNode* node) : IRInstruction(node) {}
-    // Add necessary methods
-};
-
-class DeclarationInstruction : public IRInstruction {
-public:
-    DeclarationInstruction(const ASTNode* node) : IRInstruction(node) {}
     // Add necessary methods
 };
 
