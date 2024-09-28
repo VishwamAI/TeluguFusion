@@ -1,5 +1,5 @@
 from telugu_parser import TeluguParser, NumberNode, BinOpNode, AssignNode, VariableNode, PrintNode, IfNode, StringNode, MethodCallNode, ForLoopNode, ListNode
-
+from telugu_lexer import TeluguLexer
 class TeluguInterpreter:
     def __init__(self):
         self.parser = TeluguParser()
@@ -14,7 +14,9 @@ class TeluguInterpreter:
         }
 
     def interpret(self, code):
-        ast = self.parser.parse(code)
+        lexer = TeluguLexer()
+        tokens = lexer.tokenize(code)
+        ast = self.parser.parse(tokens)
         return self.execute_statements(ast)
 
     def execute_statements(self, statements):
