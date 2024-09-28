@@ -33,7 +33,7 @@ class TeluguInterpreter:
         elif isinstance(node, BinOpNode):
             left = self.execute(node.left)
             right = self.execute(node.right)
-            if node.op == 'PLUS':
+            if node.op == '+':
                 # Ensure variables are evaluated before concatenation
                 left_value = self._evaluate_value(left)
                 right_value = self._evaluate_value(right)
