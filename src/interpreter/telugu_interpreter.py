@@ -38,7 +38,7 @@ class TeluguInterpreter:
                 left_value = self._evaluate_value(left)
                 right_value = self._evaluate_value(right)
                 # Convert both operands to strings before concatenation
-                return str(left_value) + str(right_value)
+                return self._safe_string_conversion(left_value) + self._safe_string_conversion(right_value)
             elif node.op == 'MINUS':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
             elif node.op == 'MULTIPLY':
