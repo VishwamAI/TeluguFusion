@@ -34,12 +34,12 @@ class TeluguInterpreter:
             left = self.execute(node.left)
             right = self.execute(node.right)
             if node.op == 'PLUS':
-                if isinstance(left, str) or isinstance(right, str):
-                    # Ensure variables are evaluated before concatenation
-                    left_value = self.variables.get(left, left) if isinstance(left, str) and left in self.variables else left
-                    right_value = self.variables.get(right, right) if isinstance(right, str) and right in self.variables else right
+                # Ensure variables are evaluated before concatenation
+                left_value = self.variables.get(left, left) if isinstance(left, str) else left
+                right_value = self.variables.get(right, right) if isinstance(right, str) else right
+                if isinstance(left_value, str) or isinstance(right_value, str):
                     return str(left_value) + str(right_value)
-                return left + right
+                return left_value + right_value
             elif node.op == 'MINUS':
                 return left - right
             elif node.op == 'MULTIPLY':
