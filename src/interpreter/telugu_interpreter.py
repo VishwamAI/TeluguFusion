@@ -41,17 +41,17 @@ class TeluguInterpreter:
                     return str(left_value) + str(right_value)
                 return left_value + right_value
             elif node.op == 'MINUS':
-                return left - right
+                return self._ensure_numeric(left) - self._ensure_numeric(right)
             elif node.op == 'MULTIPLY':
-                return left * right
+                return self._ensure_numeric(left) * self._ensure_numeric(right)
             elif node.op == 'DIVIDE':
-                return left / right
+                return self._ensure_numeric(left) / self._ensure_numeric(right)
             elif node.op == 'GREATER':
-                return left > right
+                return self._ensure_comparable(left) > self._ensure_comparable(right)
             elif node.op == 'LESS':
-                return left < right
+                return self._ensure_comparable(left) < self._ensure_comparable(right)
             elif node.op == 'LESS_EQUAL':
-                return left <= right
+                return self._ensure_comparable(left) <= self._ensure_comparable(right)
         elif isinstance(node, AssignNode):
             value = self.execute(node.value)
             self.variables[node.name] = value
@@ -105,6 +105,23 @@ class TeluguInterpreter:
             return [self.execute(element) for element in node.elements]
         else:
             raise ValueError(f"Unknown node type: {type(node)}")
+
+    def _ensure_numeric(self, value):
+        if isinstance(value, (int, float)):
+            return value
+        elif isinstance(value, str):
+            try:
+                return float(value)
+            except ValueError:
+                raise ValueError(f"Cannot convert '{value}' to a number")
+        else:
+            raise ValueError(f"Unsupported type for numeric operation: {type(value)}")
+
+    def _ensure_comparable(self, value):
+        if isinstance(value, (int, float, str)):
+            return value
+        else:
+            raise ValueError(f"Unsupported type for comparison: {type(value)}")
 
     def execute_file_operation(self, node):
         file_operation_map = {
