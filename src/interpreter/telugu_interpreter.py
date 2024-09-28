@@ -56,7 +56,7 @@ class TeluguInterpreter:
             self.variables[node.name] = value
             return value
         elif isinstance(node, VariableNode):
-            return self.variables.get(node.name, 0)
+            return self.variables.get(node.name, '')  # Return empty string for uninitialized variables
         elif isinstance(node, PrintNode):
             value = self.execute(node.value)
             print(value)
