@@ -38,7 +38,7 @@ class TeluguInterpreter:
                 left_value = self.variables.get(left, left) if isinstance(left, str) else left
                 right_value = self.variables.get(right, right) if isinstance(right, str) else right
                 # Convert both operands to strings before concatenation
-                return str(left_value) + str(right_value)
+                return str(self._evaluate_value(left_value)) + str(self._evaluate_value(right_value))
             elif node.op == 'MINUS':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
             elif node.op == 'MULTIPLY':
