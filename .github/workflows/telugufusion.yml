@@ -32,7 +32,7 @@ jobs:
 
     - name: Build project
       run: |
-        python src/telugu_compiler.py sample_program.tel
+        python src/compiler/telugu_compiler.py sample_program.tel
 
     - name: Run interpreter
       run: |
