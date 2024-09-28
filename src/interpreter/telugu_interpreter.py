@@ -35,10 +35,10 @@ class TeluguInterpreter:
             right = self.execute(node.right)
             if node.op == 'PLUS':
                 # Ensure variables are evaluated before concatenation
-                left_value = self.variables.get(left, left) if isinstance(left, str) else left
-                right_value = self.variables.get(right, right) if isinstance(right, str) else right
+                left_value = self._evaluate_value(left)
+                right_value = self._evaluate_value(right)
                 # Convert both operands to strings before concatenation
-                return str(self._evaluate_value(left_value)) + str(self._evaluate_value(right_value))
+                return str(left_value) + str(right_value)
             elif node.op == 'MINUS':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
             elif node.op == 'MULTIPLY':
@@ -121,6 +121,11 @@ class TeluguInterpreter:
             return value
         else:
             raise ValueError(f"Unsupported type for comparison: {type(value)}")
+
+    def _evaluate_value(self, value):
+        if isinstance(value, str) and value in self.variables:
+            return self.variables[value]
+        return value
 
     def execute_file_operation(self, node):
         file_operation_map = {
