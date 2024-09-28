@@ -27,17 +27,17 @@ class TeluguCompiler:
         elif isinstance(node, BinOpNode):
             self.compile_node(node.left)
             self.compile_node(node.right)
-            if node.op == 'PLUS':
+            if node.op == '+':
                 self.bytecode.append(('ADD',))
-            elif node.op == 'MINUS':
+            elif node.op == '-':
                 self.bytecode.append(('SUB',))
-            elif node.op == 'MULTIPLY':
+            elif node.op == '*':
                 self.bytecode.append(('MUL',))
-            elif node.op == 'DIVIDE':
+            elif node.op == '/':
                 self.bytecode.append(('DIV',))
-            elif node.op == 'GREATER':
+            elif node.op == '>':
                 self.bytecode.append(('GT',))
-            elif node.op == 'LESS':
+            elif node.op == '<':
                 self.bytecode.append(('LT',))
         elif isinstance(node, AssignNode):
             self.compile_node(node.value)

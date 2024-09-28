@@ -295,28 +295,40 @@ class TeluguParser:
     def parse_comparison(self):
         expr = self.parse_arithmetic()
         while self.current_token and self.current_token.type in ['GREATER', 'LESS', 'EQUALS', 'GREATER_EQUAL', 'LESS_EQUAL', 'NOT_EQUAL']:
-            op = self.current_token.type
+            op_token = self.current_token.type
+            op_str = {
+                'GREATER': '>', 'LESS': '<', 'EQUALS': '==',
+                'GREATER_EQUAL': '>=', 'LESS_EQUAL': '<=', 'NOT_EQUAL': '!='
+            }.get(op_token, op_token)
             self.advance()
             right = self.parse_arithmetic()
-            expr = BinOpNode(expr, op, right)
+            expr = BinOpNode(expr, op_str, right)
         return expr
 
     def parse_arithmetic(self):
         expr = self.parse_term()
         while self.current_token and self.current_token.type in ['PLUS', 'MINUS']:
-            op = self.current_token.type
+            op_token = self.current_token.type
+            op_str = {
+                'PLUS': '+',
+                'MINUS': '-'
+            }.get(op_token, op_token)
             self.advance()
             right = self.parse_term()
-            expr = BinOpNode(expr, op, right)
+            expr = BinOpNode(expr, op_str, right)
         return expr
 
     def parse_term(self):
         expr = self.parse_factor()
         while self.current_token and self.current_token.type in ['MULTIPLY', 'DIVIDE']:
-            op = self.current_token.type
+            op_token = self.current_token.type
+            op_str = {
+                'MULTIPLY': '*',
+                'DIVIDE': '/'
+            }.get(op_token, op_token)
             self.advance()
             right = self.parse_factor()
-            expr = BinOpNode(expr, op, right)
+            expr = BinOpNode(expr, op_str, right)
         return expr
 
     def parse_factor(self):
