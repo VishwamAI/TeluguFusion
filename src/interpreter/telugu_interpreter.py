@@ -36,8 +36,8 @@ class TeluguInterpreter:
             if node.op == 'PLUS':
                 if isinstance(left, str) or isinstance(right, str):
                     # Ensure variables are evaluated before concatenation
-                    left_value = self.variables.get(left, left) if isinstance(left, str) else left
-                    right_value = self.variables.get(right, right) if isinstance(right, str) else right
+                    left_value = self.variables.get(left, left) if isinstance(left, str) and left in self.variables else left
+                    right_value = self.variables.get(right, right) if isinstance(right, str) and right in self.variables else right
                     return str(left_value) + str(right_value)
                 return left + right
             elif node.op == 'MINUS':
