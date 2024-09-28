@@ -5,7 +5,7 @@ def test_compiler():
     compiler = TeluguCompiler()
 
     # Read the sample .tel file
-    with open('sample_program.tel', 'r', encoding='utf-8') as file:
+    with open(os.path.join(os.path.dirname(__file__), 'sample_program.tel'), 'r', encoding='utf-8') as file:
         code = file.read()
 
     try:
