@@ -1,7 +1,7 @@
 from telugu_lexer import TeluguLexer
 from telugu_parser import TeluguParser
 from telugu_interpreter import TeluguInterpreter
-from telugu_compiler import TeluguCompiler
+from compiler.telugu_compiler import TeluguCompiler
 
 class IntegratedFramework:
     def __init__(self):
@@ -20,7 +20,9 @@ class IntegratedFramework:
 
     def run_interpreter(self, code):
         print("Running interpreter for rapid execution and debugging...")
-        result = self.interpreter.interpret(code)
+        tokens = self.lexer.tokenize(code)
+        ast = self.parser.parse(tokens)
+        result = self.interpreter.interpret(ast)
         print("Interpreter execution completed.")
         return result
 
