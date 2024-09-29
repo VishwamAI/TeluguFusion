@@ -1,0 +1,28 @@
+# Sample Telugu program
+
+# Variable definitions
+చర సంఖ్య = 10
+పదం పేరు = "రాము"
+నిజం జతపడి = నిజం
+
+# Function definition
+ప్రమేయం స్వాగతం(పదం వ్యక్తి_పేరు) {
+    చేపాయిపిండి("నమస్కారం, " + వ్యక్తి_పేరు + "!")
+}
+
+# Conditional statement
+ఉంటుంది (సంఖ్య > 5 మరియు జతపడి) {
+    చేపాయిపిండి("రెండు షరతులు నిజం!")
+}
+
+# Function to add two numbers
+ప్రమేయం కూడిక(చర a, చర b) {
+    ప్రతిఫలించు a + b
+}
+
+# Using the function
+చర మొత్తం = కూడిక(5, 7)
+చేపాయిపిండి("5 మరియు 7 కూడిక: " + మొత్తం)
+
+# Call the welcome function
+స్వాగతం(పేరు)

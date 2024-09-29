@@ -1,0 +1,766 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> VARIABLE EQUALS expression
+Rule 2     statement -> PRINT LPAREN expression RPAREN
+Rule 3     statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE
+Rule 4     statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+Rule 5     expression -> expression PLUS expression
+Rule 6     expression -> expression MINUS expression
+Rule 7     expression -> expression TIMES expression
+Rule 8     expression -> expression DIVIDE expression
+Rule 9     expression -> LPAREN expression RPAREN
+Rule 10    expression -> NUMBER
+Rule 11    expression -> VARIABLE
+Rule 12    expression -> STRING
+Rule 13    expression -> expression GREATER expression
+Rule 14    expression -> expression LESS expression
+
+Terminals, with rules where they appear
+
+DIVIDE               : 8
+ELSE                 : 4
+EQUALS               : 1
+GREATER              : 13
+IF                   : 3 4
+LBRACE               : 3 4 4
+LESS                 : 14
+LPAREN               : 2 3 4 9
+MINUS                : 6
+NUMBER               : 10
+PLUS                 : 5
+PRINT                : 2
+RBRACE               : 3 4 4
+RPAREN               : 2 3 4 9
+STRING               : 12
+TIMES                : 7
+VARIABLE             : 1 11
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 3 4 5 5 6 6 7 7 8 8 9 13 13 14 14
+statement            : 3 4 4 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . VARIABLE EQUALS expression
+    (2) statement -> . PRINT LPAREN expression RPAREN
+    (3) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE
+    (4) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+
+    VARIABLE        shift and go to state 2
+    PRINT           shift and go to state 3
+    IF              shift and go to state 4
+
+    statement                      shift and go to state 1
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> VARIABLE . EQUALS expression
+
+    EQUALS          shift and go to state 5
+
+
+state 3
+
+    (2) statement -> PRINT . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 6
+
+
+state 4
+
+    (3) statement -> IF . LPAREN expression RPAREN LBRACE statement RBRACE
+    (4) statement -> IF . LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+
+    LPAREN          shift and go to state 7
+
+
+state 5
+
+    (1) statement -> VARIABLE EQUALS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 9
+
+state 6
+
+    (2) statement -> PRINT LPAREN . expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 13
+
+state 7
+
+    (3) statement -> IF LPAREN . expression RPAREN LBRACE statement RBRACE
+    (4) statement -> IF LPAREN . expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 14
+
+state 8
+
+    (11) expression -> VARIABLE .
+
+    PLUS            reduce using rule 11 (expression -> VARIABLE .)
+    MINUS           reduce using rule 11 (expression -> VARIABLE .)
+    TIMES           reduce using rule 11 (expression -> VARIABLE .)
+    DIVIDE          reduce using rule 11 (expression -> VARIABLE .)
+    GREATER         reduce using rule 11 (expression -> VARIABLE .)
+    LESS            reduce using rule 11 (expression -> VARIABLE .)
+    $end            reduce using rule 11 (expression -> VARIABLE .)
+    RBRACE          reduce using rule 11 (expression -> VARIABLE .)
+    RPAREN          reduce using rule 11 (expression -> VARIABLE .)
+
+
+state 9
+
+    (1) statement -> VARIABLE EQUALS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+    $end            reduce using rule 1 (statement -> VARIABLE EQUALS expression .)
+    RBRACE          reduce using rule 1 (statement -> VARIABLE EQUALS expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+
+state 10
+
+    (9) expression -> LPAREN . expression RPAREN
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 21
+
+state 11
+
+    (10) expression -> NUMBER .
+
+    PLUS            reduce using rule 10 (expression -> NUMBER .)
+    MINUS           reduce using rule 10 (expression -> NUMBER .)
+    TIMES           reduce using rule 10 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 10 (expression -> NUMBER .)
+    GREATER         reduce using rule 10 (expression -> NUMBER .)
+    LESS            reduce using rule 10 (expression -> NUMBER .)
+    $end            reduce using rule 10 (expression -> NUMBER .)
+    RBRACE          reduce using rule 10 (expression -> NUMBER .)
+    RPAREN          reduce using rule 10 (expression -> NUMBER .)
+
+
+state 12
+
+    (12) expression -> STRING .
+
+    PLUS            reduce using rule 12 (expression -> STRING .)
+    MINUS           reduce using rule 12 (expression -> STRING .)
+    TIMES           reduce using rule 12 (expression -> STRING .)
+    DIVIDE          reduce using rule 12 (expression -> STRING .)
+    GREATER         reduce using rule 12 (expression -> STRING .)
+    LESS            reduce using rule 12 (expression -> STRING .)
+    $end            reduce using rule 12 (expression -> STRING .)
+    RBRACE          reduce using rule 12 (expression -> STRING .)
+    RPAREN          reduce using rule 12 (expression -> STRING .)
+
+
+state 13
+
+    (2) statement -> PRINT LPAREN expression . RPAREN
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+    RPAREN          shift and go to state 22
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+
+state 14
+
+    (3) statement -> IF LPAREN expression . RPAREN LBRACE statement RBRACE
+    (4) statement -> IF LPAREN expression . RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+    RPAREN          shift and go to state 23
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+
+state 15
+
+    (5) expression -> expression PLUS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 24
+
+state 16
+
+    (6) expression -> expression MINUS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 25
+
+state 17
+
+    (7) expression -> expression TIMES . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 26
+
+state 18
+
+    (8) expression -> expression DIVIDE . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 27
+
+state 19
+
+    (13) expression -> expression GREATER . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 28
+
+state 20
+
+    (14) expression -> expression LESS . expression
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression TIMES expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . LPAREN expression RPAREN
+    (10) expression -> . NUMBER
+    (11) expression -> . VARIABLE
+    (12) expression -> . STRING
+    (13) expression -> . expression GREATER expression
+    (14) expression -> . expression LESS expression
+
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 11
+    VARIABLE        shift and go to state 8
+    STRING          shift and go to state 12
+
+    expression                     shift and go to state 29
+
+state 21
+
+    (9) expression -> LPAREN expression . RPAREN
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+    RPAREN          shift and go to state 30
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+
+state 22
+
+    (2) statement -> PRINT LPAREN expression RPAREN .
+
+    $end            reduce using rule 2 (statement -> PRINT LPAREN expression RPAREN .)
+    RBRACE          reduce using rule 2 (statement -> PRINT LPAREN expression RPAREN .)
+
+
+state 23
+
+    (3) statement -> IF LPAREN expression RPAREN . LBRACE statement RBRACE
+    (4) statement -> IF LPAREN expression RPAREN . LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+
+    LBRACE          shift and go to state 31
+
+
+state 24
+
+    (5) expression -> expression PLUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 5 (expression -> expression PLUS expression .)
+    RBRACE          reduce using rule 5 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 5 (expression -> expression PLUS expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! MINUS           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! TIMES           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! GREATER         [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! LESS            [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+
+
+state 25
+
+    (6) expression -> expression MINUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 6 (expression -> expression MINUS expression .)
+    RBRACE          reduce using rule 6 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 6 (expression -> expression MINUS expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! MINUS           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! TIMES           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! GREATER         [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! LESS            [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+
+
+state 26
+
+    (7) expression -> expression TIMES expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 7 (expression -> expression TIMES expression .)
+    RBRACE          reduce using rule 7 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 7 (expression -> expression TIMES expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! MINUS           [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! TIMES           [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! GREATER         [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+  ! LESS            [ reduce using rule 7 (expression -> expression TIMES expression .) ]
+
+
+state 27
+
+    (8) expression -> expression DIVIDE expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 8 (expression -> expression DIVIDE expression .)
+    RBRACE          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! MINUS           [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! TIMES           [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! GREATER         [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+  ! LESS            [ reduce using rule 8 (expression -> expression DIVIDE expression .) ]
+
+
+state 28
+
+    (13) expression -> expression GREATER expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 13 (expression -> expression GREATER expression .)
+    RBRACE          reduce using rule 13 (expression -> expression GREATER expression .)
+    RPAREN          reduce using rule 13 (expression -> expression GREATER expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+  ! MINUS           [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+  ! TIMES           [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+  ! DIVIDE          [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+  ! GREATER         [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+  ! LESS            [ reduce using rule 13 (expression -> expression GREATER expression .) ]
+
+
+state 29
+
+    (14) expression -> expression LESS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . TIMES expression
+    (8) expression -> expression . DIVIDE expression
+    (13) expression -> expression . GREATER expression
+    (14) expression -> expression . LESS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+    $end            reduce using rule 14 (expression -> expression LESS expression .)
+    RBRACE          reduce using rule 14 (expression -> expression LESS expression .)
+    RPAREN          reduce using rule 14 (expression -> expression LESS expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    GREATER         shift and go to state 19
+    LESS            shift and go to state 20
+
+  ! PLUS            [ reduce using rule 14 (expression -> expression LESS expression .) ]
+  ! MINUS           [ reduce using rule 14 (expression -> expression LESS expression .) ]
+  ! TIMES           [ reduce using rule 14 (expression -> expression LESS expression .) ]
+  ! DIVIDE          [ reduce using rule 14 (expression -> expression LESS expression .) ]
+  ! GREATER         [ reduce using rule 14 (expression -> expression LESS expression .) ]
+  ! LESS            [ reduce using rule 14 (expression -> expression LESS expression .) ]
+
+
+state 30
+
+    (9) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    RBRACE          reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 9 (expression -> LPAREN expression RPAREN .)
+
+
+state 31
+
+    (3) statement -> IF LPAREN expression RPAREN LBRACE . statement RBRACE
+    (4) statement -> IF LPAREN expression RPAREN LBRACE . statement RBRACE ELSE LBRACE statement RBRACE
+    (1) statement -> . VARIABLE EQUALS expression
+    (2) statement -> . PRINT LPAREN expression RPAREN
+    (3) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE
+    (4) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+
+    VARIABLE        shift and go to state 2
+    PRINT           shift and go to state 3
+    IF              shift and go to state 4
+
+    statement                      shift and go to state 32
+
+state 32
+
+    (3) statement -> IF LPAREN expression RPAREN LBRACE statement . RBRACE
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement . RBRACE ELSE LBRACE statement RBRACE
+
+    RBRACE          shift and go to state 33
+
+
+state 33
+
+    (3) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE .
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE . ELSE LBRACE statement RBRACE
+
+    $end            reduce using rule 3 (statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE .)
+    RBRACE          reduce using rule 3 (statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE .)
+    ELSE            shift and go to state 34
+
+
+state 34
+
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE . LBRACE statement RBRACE
+
+    LBRACE          shift and go to state 35
+
+
+state 35
+
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE . statement RBRACE
+    (1) statement -> . VARIABLE EQUALS expression
+    (2) statement -> . PRINT LPAREN expression RPAREN
+    (3) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE
+    (4) statement -> . IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE
+
+    VARIABLE        shift and go to state 2
+    PRINT           shift and go to state 3
+    IF              shift and go to state 4
+
+    statement                      shift and go to state 36
+
+state 36
+
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement . RBRACE
+
+    RBRACE          shift and go to state 37
+
+
+state 37
+
+    (4) statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE .
+
+    $end            reduce using rule 4 (statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE .)
+    RBRACE          reduce using rule 4 (statement -> IF LPAREN expression RPAREN LBRACE statement RBRACE ELSE LBRACE statement RBRACE .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 24 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 24 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 24 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 24 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 24 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 24 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 25 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 25 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 25 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 25 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 26 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 26 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 26 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 26 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 27 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 27 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 27 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 27 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 28 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 28 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 28 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 28 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 29 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 29 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 29 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 29 resolved as shift
