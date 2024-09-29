@@ -28,8 +28,11 @@ jobs:
         python --version
         pip list
 
-    - name: Set PYTHONPATH
-      run: echo "PYTHONPATH=$PYTHONPATH:${{ github.workspace }}/src" >> $GITHUB_ENV
+    - name: Set PYTHONPATH and other environment variables
+      run: |
+        echo "PYTHONPATH=$PYTHONPATH:${{ github.workspace }}/src" >> $GITHUB_ENV
+        echo "TELUGU_FUSION_HOME=${{ github.workspace }}" >> $GITHUB_ENV
+        echo "DEBUG=1" >> $GITHUB_ENV
 
     - name: Run tests
       run: |
