@@ -36,14 +36,16 @@ class TeluguInterpreter:
             print(f"Debug: BinOpNode - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)}), Op: {node.op}")
             if node.op == '+':
                 # Ensure variables are evaluated before concatenation
+                print(f"Debug: Before evaluation - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)})")
                 left_value = self._evaluate_value(left)
                 right_value = self._evaluate_value(right)
                 print(f"Debug: After evaluation - Left: {left_value} (type: {type(left_value)}), Right: {right_value} (type: {type(right_value)})")
                 # Convert both operands to strings before concatenation
                 left_str = str(left_value) if left_value is not None else ''
                 right_str = str(right_value) if right_value is not None else ''
+                print(f"Debug: Before concatenation - Left: {left_str} (type: {type(left_str)}), Right: {right_str} (type: {type(right_str)})")
                 result = left_str + right_str
-                print(f"Debug: Concatenation result: {result}")
+                print(f"Debug: Concatenation result: {result} (type: {type(result)})")
                 return result
             elif node.op == '-':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
