@@ -69,10 +69,12 @@ class TeluguInterpreter:
             print(f"Debug: Variables after assignment: {self.variables}")
             return value
         elif isinstance(node, VariableNode):
-            value = self.variables.get(node.name, '')
+            value = self.variables.get(node.name, 0)  # Default to 0 for numeric operations
+            if isinstance(value, str) and not value:
+                value = ''  # Use empty string for string operations
             print(f"Debug: VariableNode - Name: {node.name}, Value: {value} (type: {type(value)})")
             print(f"Debug: Current variables: {self.variables}")
-            return value  # Return empty string for uninitialized variables
+            return value
         elif isinstance(node, PrintNode):
             value = self.execute(node.value)
             print(f"Debug: PrintNode - Value: {value} (type: {type(value)})")
