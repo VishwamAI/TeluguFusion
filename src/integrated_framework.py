@@ -5,6 +5,8 @@ from compiler.telugu_compiler import TeluguCompiler
 from telugu_gym import పర్యావరణం, సరళ_గ్రిడ్_ప్రపంచం, క్యూ_అభ్యాసకుడు, శిక్షణ
 from telugu_gymnasium import పర్యావరణం as జిమ్నేజియం_పర్యావరణం, సరళ_గ్రిడ్_ప్రపంచం as జిమ్నేజియం_సరళ_గ్రిడ్_ప్రపంచం, క్యూ_అభ్యాసకుడు as జిమ్నేజియం_క్యూ_అభ్యాసకుడు, శిక్షణ as జిమ్నేజియం_శిక్షణ
 from telugu_is_tensor import టెన్సర్_ఉందా
+from telugu_dataloader import తెలుగు_డేటాలోడర్
+from telugu_optimizers import స్టోకాస్టిక్_గ్రేడియంట్_డీసెంట్, ఆడమ్
 
 import math
 import random

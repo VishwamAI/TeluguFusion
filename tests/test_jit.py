@@ -1,7 +1,7 @@
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-from src.compiler import TeluguCompiler
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from compiler.telugu_compiler import TeluguCompiler
 import time
 
 def test_jit_performance():
