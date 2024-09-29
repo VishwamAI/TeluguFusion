@@ -26,9 +26,12 @@ class TeluguInterpreter:
         return result
 
     def execute(self, node):
+        print(f"Debug: Executing node of type {type(node)}")
         if isinstance(node, NumberNode):
+            print(f"Debug: NumberNode - Value: {node.value}")
             return node.value
         elif isinstance(node, StringNode):
+            print(f"Debug: StringNode - Value: {node.value}")
             return node.value
         elif isinstance(node, BinOpNode):
             left = self.execute(node.left)
@@ -63,10 +66,12 @@ class TeluguInterpreter:
             value = self.execute(node.value)
             self.variables[node.name] = value
             print(f"Debug: AssignNode - Name: {node.name}, Value: {value} (type: {type(value)})")
+            print(f"Debug: Variables after assignment: {self.variables}")
             return value
         elif isinstance(node, VariableNode):
             value = self.variables.get(node.name, '')
             print(f"Debug: VariableNode - Name: {node.name}, Value: {value} (type: {type(value)})")
+            print(f"Debug: Current variables: {self.variables}")
             return value  # Return empty string for uninitialized variables
         elif isinstance(node, PrintNode):
             value = self.execute(node.value)
