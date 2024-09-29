@@ -57,11 +57,12 @@ class TeluguInterpreter:
                 # Convert both operands to strings before concatenation
                 left_str = str(left_value) if left_value is not None else ''
                 right_str = str(right_value) if right_value is not None else ''
-                print(f"Debug: Before concatenation - Left: {left_str} (type: {type(left_str)}), Right: {right_str} (type: {type(right_str)})")
-                print(f"Debug: Attempting concatenation of '{left_str}' and '{right_str}'")
+                print(f"Debug: Before concatenation - Left: {left_str!r} (type: {type(left_str)})")
+                print(f"Debug: Before concatenation - Right: {right_str!r} (type: {type(right_str)})")
+                print(f"Debug: Attempting concatenation of {left_str!r} and {right_str!r}")
                 try:
                     result = left_str + right_str
-                    print(f"Debug: Concatenation result: {result} (type: {type(result)})")
+                    print(f"Debug: Concatenation result: {result!r} (type: {type(result)})")
                 except Exception as e:
                     print(f"Debug: Concatenation failed. Error: {str(e)}")
                     raise
