@@ -53,8 +53,12 @@ class TeluguInterpreter:
                 right_str = str(right_value) if right_value is not None else ''
                 print(f"Debug: Before concatenation - Left: {left_str} (type: {type(left_str)}), Right: {right_str} (type: {type(right_str)})")
                 print(f"Debug: Attempting concatenation of '{left_str}' and '{right_str}'")
-                result = left_str + right_str
-                print(f"Debug: Concatenation result: {result} (type: {type(result)})")
+                try:
+                    result = left_str + right_str
+                    print(f"Debug: Concatenation result: {result} (type: {type(result)})")
+                except Exception as e:
+                    print(f"Debug: Concatenation failed. Error: {str(e)}")
+                    raise
                 return result
             elif node.op == '-':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
