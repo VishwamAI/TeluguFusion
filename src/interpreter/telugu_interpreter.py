@@ -12,6 +12,8 @@ class TeluguInterpreter:
             'టాంజెంట్': 'tan',
             'లాగ్': 'log'
         }
+        # Initialize variables with default values
+        self.variables = {'సంఖ్య': 0, 'పేరు': '', 'జతపడి': False, 'మొత్తం': 0}
 
     def interpret(self, code):
         lexer = TeluguLexer()
@@ -34,6 +36,9 @@ class TeluguInterpreter:
             print(f"Debug: StringNode - Value: {node.value}")
             return node.value
         elif isinstance(node, BinOpNode):
+            print(f"Debug: BinOpNode - Starting execution")
+            print(f"Debug: Left node: {node.left}")
+            print(f"Debug: Right node: {node.right}")
             left = self.execute(node.left)
             right = self.execute(node.right)
             print(f"Debug: BinOpNode - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)}), Op: {node.op}")
