@@ -25,22 +25,28 @@ class TeluguInterpreter:
             print(f"Debug: BinOpNode - Left: {left}, Right: {right}, Op: {ast.op}")
             result = None  # Initialize result variable
             if ast.op == '+':
-                # Convert both operands to strings before concatenation
-                result = str(left) + str(right)
+                # Handle addition for different types
+                if isinstance(left, (int, float)) and isinstance(right, (int, float)):
+                    result = left + right
+                else:
+                    result = str(left) + str(right)
             elif ast.op == '-':
-                result = left - right
+                result = self._ensure_numeric(left) - self._ensure_numeric(right)
             elif ast.op == '*':
-                result = left * right
+                result = self._ensure_numeric(left) * self._ensure_numeric(right)
             elif ast.op == '/':
-                result = left / right
-            elif ast.op == '>':
-                result = left > right
-            elif ast.op == '<':
-                result = left < right
-            elif ast.op == '>=':
-                result = left >= right
-            elif ast.op == '<=':
-                result = left <= right
+                result = self._ensure_numeric(left) / self._ensure_numeric(right)
+            elif ast.op in ['>', '<', '>=', '<=']:
+                left = self._ensure_comparable(left)
+                right = self._ensure_comparable(right)
+                if ast.op == '>':
+                    result = left > right
+                elif ast.op == '<':
+                    result = left < right
+                elif ast.op == '>=':
+                    result = left >= right
+                elif ast.op == '<=':
+                    result = left <= right
             elif ast.op == '==':
                 result = left == right
             elif ast.op == '!=':
@@ -104,7 +110,7 @@ class TeluguInterpreter:
                 obj = self.interpret(ast.object)
                 args = [self.interpret(arg) for arg in ast.args]
                 if isinstance(obj, str) and ast.method == 'చేర్చు':
-                    return obj + ''.join(args)
+                    return obj + ''.join(str(arg) for arg in args)
                 elif isinstance(obj, list) and ast.method == 'చేర్చు':
                     obj.append(args[0])
                     return obj
@@ -112,6 +118,19 @@ class TeluguInterpreter:
                 return method(*args)
         else:
             raise ValueError(f"Unknown node type: {type(ast)}")
+
+    def _ensure_numeric(self, value):
+        if isinstance(value, (int, float)):
+            return value
+        try:
+            return float(value)
+        except ValueError:
+            raise TypeError(f"Cannot convert '{value}' to a number")
+
+    def _ensure_comparable(self, value):
+        if isinstance(value, (int, float, str)):
+            return value
+        return str(value)
 
     def file_write(self, filename, content):
         with open(filename, 'w', encoding='utf-8') as file:
