@@ -25,7 +25,8 @@ class TeluguInterpreter:
             print(f"Debug: BinOpNode - Left: {left}, Right: {right}, Op: {ast.op}")
             result = None  # Initialize result variable
             if ast.op == '+':
-                result = left + right  # Perform addition without string conversion
+                # Convert both operands to strings before concatenation
+                result = str(left) + str(right)
             elif ast.op == '-':
                 result = left - right
             elif ast.op == '*':
