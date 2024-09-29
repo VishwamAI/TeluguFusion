@@ -40,7 +40,9 @@ class TeluguInterpreter:
                 right_value = self._evaluate_value(right)
                 print(f"Debug: After evaluation - Left: {left_value} (type: {type(left_value)}), Right: {right_value} (type: {type(right_value)})")
                 # Convert both operands to strings before concatenation
-                result = str(left_value) + str(right_value)
+                left_str = str(left_value) if left_value is not None else ''
+                right_str = str(right_value) if right_value is not None else ''
+                result = left_str + right_str
                 print(f"Debug: Concatenation result: {result}")
                 return result
             elif node.op == '-':
