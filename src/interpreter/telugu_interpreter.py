@@ -39,14 +39,20 @@ class TeluguInterpreter:
             print(f"Debug: BinOpNode - Starting execution")
             print(f"Debug: Left node: {node.left}")
             print(f"Debug: Right node: {node.right}")
+            print(f"Debug: BinOpNode - Executing left node: {node.left}")
             left = self.execute(node.left)
+            print(f"Debug: BinOpNode - Left node execution result: {left} (type: {type(left)})")
+            print(f"Debug: BinOpNode - Executing right node: {node.right}")
             right = self.execute(node.right)
+            print(f"Debug: BinOpNode - Right node execution result: {right} (type: {type(right)})")
             print(f"Debug: BinOpNode - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)}), Op: {node.op}")
             if node.op == '+':
                 # Ensure variables are evaluated before concatenation
                 print(f"Debug: Before evaluation - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)})")
                 left_value = self._evaluate_value(left)
+                print(f"Debug: After left evaluation - Left: {left_value} (type: {type(left_value)})")
                 right_value = self._evaluate_value(right)
+                print(f"Debug: After right evaluation - Right: {right_value} (type: {type(right_value)})")
                 print(f"Debug: After evaluation - Left: {left_value} (type: {type(left_value)}), Right: {right_value} (type: {type(right_value)})")
                 # Convert both operands to strings before concatenation
                 left_str = str(left_value) if left_value is not None else ''
