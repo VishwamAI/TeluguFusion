@@ -33,23 +33,27 @@ class TeluguInterpreter:
         elif isinstance(node, BinOpNode):
             left = self.execute(node.left)
             right = self.execute(node.right)
+            print(f"Debug: BinOpNode - Left: {left} (type: {type(left)}), Right: {right} (type: {type(right)}), Op: {node.op}")
             if node.op == '+':
                 # Ensure variables are evaluated before concatenation
                 left_value = self._evaluate_value(left)
                 right_value = self._evaluate_value(right)
+                print(f"Debug: After evaluation - Left: {left_value} (type: {type(left_value)}), Right: {right_value} (type: {type(right_value)})")
                 # Convert both operands to strings before concatenation
-                return str(left_value) + str(right_value)
-            elif node.op == 'MINUS':
+                result = str(left_value) + str(right_value)
+                print(f"Debug: Concatenation result: {result}")
+                return result
+            elif node.op == '-':
                 return self._ensure_numeric(left) - self._ensure_numeric(right)
-            elif node.op == 'MULTIPLY':
+            elif node.op == '*':
                 return self._ensure_numeric(left) * self._ensure_numeric(right)
-            elif node.op == 'DIVIDE':
+            elif node.op == '/':
                 return self._ensure_numeric(left) / self._ensure_numeric(right)
-            elif node.op == 'GREATER':
+            elif node.op == '>':
                 return self._ensure_comparable(left) > self._ensure_comparable(right)
-            elif node.op == 'LESS':
+            elif node.op == '<':
                 return self._ensure_comparable(left) < self._ensure_comparable(right)
-            elif node.op == 'LESS_EQUAL':
+            elif node.op == '<=':
                 return self._ensure_comparable(left) <= self._ensure_comparable(right)
         elif isinstance(node, AssignNode):
             value = self.execute(node.value)
