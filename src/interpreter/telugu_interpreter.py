@@ -62,6 +62,7 @@ class TeluguInterpreter:
         elif isinstance(node, AssignNode):
             value = self.execute(node.value)
             self.variables[node.name] = value
+            print(f"Debug: AssignNode - Name: {node.name}, Value: {value} (type: {type(value)})")
             return value
         elif isinstance(node, VariableNode):
             value = self.variables.get(node.name, '')
@@ -69,16 +70,19 @@ class TeluguInterpreter:
             return value  # Return empty string for uninitialized variables
         elif isinstance(node, PrintNode):
             value = self.execute(node.value)
+            print(f"Debug: PrintNode - Value: {value} (type: {type(value)})")
             print(value)
             return value
         elif isinstance(node, IfNode):
             condition = self.execute(node.condition)
+            print(f"Debug: IfNode - Condition: {condition} (type: {type(condition)})")
             if condition:
                 return self.execute_statements(node.true_body)
             elif node.false_body:
                 return self.execute_statements(node.false_body)
         elif isinstance(node, MethodCallNode):
             obj = self.execute(node.object)
+            print(f"Debug: MethodCallNode - Object: {obj} (type: {type(obj)}), Method: {node.method}")
             if obj == 'ఫైల్':
                 # Handle file operations
                 return self.execute_file_operation(node)
@@ -111,7 +115,9 @@ class TeluguInterpreter:
             print(f"Debug: Loop finished, final మొత్తం = {self.variables.get('మొత్తం', 0)}")
             return result
         elif isinstance(node, ListNode):
-            return [self.execute(element) for element in node.elements]
+            elements = [self.execute(element) for element in node.elements]
+            print(f"Debug: ListNode - Elements: {elements}")
+            return elements
         else:
             raise ValueError(f"Unknown node type: {type(node)}")
 
