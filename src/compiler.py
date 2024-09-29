@@ -18,6 +18,15 @@ class TeluguCompiler:
         target_machine = target.create_target_machine()
         backing_mod = llvm.parse_assembly("")
         engine = llvm.create_mcjit_compiler(backing_mod, target_machine)
+        engine.set_object_cache(llvm.ObjectCache())
+        pm = llvm.create_module_pass_manager()
+        pm.add_instruction_combining_pass()
+        pm.add_reassociate_pass()
+        pm.add_gvn_pass()
+        pm.add_cfg_simplification_pass()
+        pm.add_basic_alias_analysis_pass()
+        pm.add_promote_memory_to_register_pass()
+        engine.add_module_pass_manager(pm)
         return engine
 
     def _declare_print_function(self):

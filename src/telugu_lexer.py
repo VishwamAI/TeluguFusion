@@ -20,7 +20,8 @@ class TeluguLexer:
             'కాదు': 'NOT',
             'వరకు': 'WHILE',
             'కొరకు': 'FOR',
-            'తిరిగిఇవ్వు': 'RETURN'
+            'తిరిగిఇవ్వు': 'RETURN',
+            'చేయు': 'DO'
         }
 
         self.operators = {
